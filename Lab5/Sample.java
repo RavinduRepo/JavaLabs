@@ -1,5 +1,7 @@
-import java.math.*; 
+import java.util.ArrayList;
 import java.util.Random; // for random 
+
+// Import the FileWriter class to write to files
 import java.io.*; // for file IO
 
 class Sample { 
@@ -7,52 +9,50 @@ class Sample {
 
     public static void main(String [] args) { 
 
-	/* Method 1: the Math class provides a static method called random 
-	 * to generate a random number between 0 and 1. 
-	 * You can multiply with a suitable MAX to get an 
-	 * integer within a range 
-	 */
-	System.out.println("Random value between 0-1 = " + Math.random()); 
+		BufferedReader descriptor = null; 
+		String [] names = new String[62]; // 61 names 
+		try { 
+			descriptor = new BufferedReader(
+					new FileReader("co225-classlist.txt"));
 
-	int MAX = 10;
-	int rand = (int)(Math.random() * 10); // cast to int
-	System.out.printf("Random integer between 0-%d = %d\n", MAX, rand); 
+			for(int i=0; i < names.length; i++) // assume file has 61 lines 
+			names[i] = descriptor.readLine(); 
 
-	/* Method 2: create Random object. When creating an object you can 
-	 * give a seed (of type long) or not. 
-	 * see https://docs.oracle.com/javase/7/docs/api/java/util/Random.html 
-	 * The object provides a method called nextInt(int n) which returns 
-	 * a integer between 0 and n (inclusive). 
-	 */
-	Random randomGen = new Random(); 
-	System.out.println("Using Random. Rand number = " + 
-			   randomGen.nextInt(MAX)); 
+			descriptor.close(); 
 
-	/**************************************************************/ 
-	/* Reading a file. 
-	 */
-	BufferedReader descriptor = null; 
-	String line = null; 
-	String [] names = new String[62]; // 61 names 
-	try { 
-	    descriptor = new BufferedReader(
-			    new FileReader("co225-classlist.txt"));
+		} catch(IOException e) { 
+			// IOException is more generic (FileNotFound is a type of a 
+			// IOException, so catching only that is sufficient 
+			System.out.println("Bad things happen, what do you do!" + e);
+			return; 
+		}
 
-	    for(int i=0; i < names.length; i++) // assume file has 61 lines 
-		names[i] = descriptor.readLine(); 
+		ArrayList<Student> students = new ArrayList<>();	// Store students objecs
+		Random randomGen = new Random(); // To generte an attendence
+		int MAX = 45; // maximum attendence
+		
+		// we will run only if no exceptions were thrown 
+		for(int i=0; i < names.length; i++) {
+			if (names[i] != null){
+				students.add(new Student(names[i], randomGen.nextInt(MAX))); 
+			}
+		}
 
-	    descriptor.close(); 
+		try {
+			// Create new file for ineligible student's list
+			FileWriter writer = new FileWriter("co225-classlist-ineligible.txt");
 
-	} catch(IOException e) { 
-	    // IOException is more generic (FileNotFound is a type of a 
-	    // IOException, so catching only that is sufficient 
-	    System.out.println("Bad things happen, what do you do!" + e);
-	    return; 
+			for(Student student : students){
+				student.updateSurname();	// Updating student's names
+				if (student.getAttendancePercentage() < 80){
+					System.out.println(student.getSurname() + "\t" + student.getAttendancePercentage());	// Printing with the precentage attandence
+					writer.write(student.getSurname() + "\n"); 	//	 Storing stundent's names in the new file
+				}
+			}
+			writer.close(); // Closing the writer 
+		} catch (IOException e) {
+            System.out.println("An error occurred while copying text."); // Display error message
+            e.printStackTrace(); // Print stack trace for debugging
+        }
 	}
-
-	// we will run only if no exceptions were thrown 
-	for(int i=0; i < names.length; i++) 
-	    System.out.println(names[i]); 
-
-    }
 }
