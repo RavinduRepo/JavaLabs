@@ -4,7 +4,7 @@ import java.util.Random; // for random
 // Import the FileWriter class to write to files
 import java.io.*; // for file IO
 
-class Sample { 
+class Main { 
     /* contains some sample code which might be useful for the lab */
 
     public static void main(String [] args) { 
