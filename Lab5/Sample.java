@@ -44,7 +44,7 @@ class Sample {
 
 			for(Student student : students){
 				student.updateSurname();	// Updating student's names
-				if (student.getAttendancePercentage() < 80){
+				if (student.isAttendanceLessThan80()){
 					System.out.println(student.getSurname() + "\t" + student.getAttendancePercentage());	// Printing with the precentage attandence
 					writer.write(student.getSurname() + "\n"); 	//	 Storing stundent's names in the new file
 				}
