@@ -1,6 +1,3 @@
-import java.io.*;
-import java.util.Random;
-
 public class Student {
     private String surname;
     private int attendance;
