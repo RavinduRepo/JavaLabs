@@ -29,12 +29,12 @@ class Main {
 
 		ArrayList<Student> students = new ArrayList<>();	// Store students objecs
 		Random randomGen = new Random(); // To generte an attendence
-		int MAX = 45; // maximum attendence
+		int maxAttendence = 45; // maximum attendence
 		
 		// we will run only if no exceptions were thrown 
 		for(int i=0; i < names.length; i++) {
 			if (names[i] != null){
-				students.add(new Student(names[i], randomGen.nextInt(MAX))); 
+				students.add(new Student(names[i], randomGen.nextInt(maxAttendence))); 
 			}
 		}
 
