@@ -46,10 +46,10 @@ class Main {
 
 			for(Student student : students){
 				if (student.isAttendanceLessThan80()){
-					System.out.println(student.getSurname() + "\t" + student.getAttendancePercentage());	// Printing with the precentage attandence
 					writer1.write(student.getSurname() + "\n"); 	//	 Storing stundent's names in the new file
 					student.updateSurname();	// Updating student's names
 				}
+				System.out.println(student.getSurname() + "     \t" + student.getAttendancePercentage());	// Printing with the precentage attandence
 				writer2.write(student.getSurname() + "\n");
 			}
 			writer1.close(); // Closing the writer 
