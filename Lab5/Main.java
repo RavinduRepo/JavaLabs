@@ -40,16 +40,21 @@ class Main {
 
 		try {
 			// Create new file for ineligible student's list
-			FileWriter writer = new FileWriter("co225-classlist-ineligible.txt");
+			FileWriter writer1 = new FileWriter("co225-classlist-ineligible.txt");
+			FileWriter writer2 = new FileWriter("co225-classlist.txt");
+
 
 			for(Student student : students){
-				student.updateSurname();	// Updating student's names
 				if (student.isAttendanceLessThan80()){
 					System.out.println(student.getSurname() + "\t" + student.getAttendancePercentage());	// Printing with the precentage attandence
-					writer.write(student.getSurname() + "\n"); 	//	 Storing stundent's names in the new file
+					writer1.write(student.getSurname() + "\n"); 	//	 Storing stundent's names in the new file
+					student.updateSurname();	// Updating student's names
 				}
+				writer2.write(student.getSurname() + "\n");
 			}
-			writer.close(); // Closing the writer 
+			writer1.close(); // Closing the writer 
+			writer2.close(); // Closing the writer 
+
 		} catch (IOException e) {
             System.out.println("An error occurred while copying text."); // Display error message
             e.printStackTrace(); // Print stack trace for debugging
